@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Submission{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div >
+  <div >
+    <div>
+      <p id="status"> <b>Compilation status :</b> <br> {{submission['verdict']}}</p>
+      <p id="msg"> <b>Compile Info:</b> <br>{{submission['msg']}}</p>
+      <p id="testpass"> <b>Testcases Accepted :</b> <br>{{submission['passed']}} </p>
+      <p id="score"> <b>Score :</b><br> {{submission['score']}}</p>
+    </div>
+    <textarea id='result'>{{submission['code']}}</textarea>
+  </div>
+</div>
+{% endblock %}

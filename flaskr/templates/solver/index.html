@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Solver{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div id="instmodal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="modalClose()">&times;</span>
+    <p>
+      <h2 text-align="center"><b>INSTRUSTIONS</b></h2>
+      <ol>
+        <li>Before you attempt the problem, you MUST select a language from the dropdown list.</li>
+        <li>All inputs for the problem are from STDIN and output to STDOUT.</li>
+        <li>You cannot use backspace key, if you think you have made any mistake you can press retry key to restart your code.</li>
+        <li>In case if prefered language is <b>JAVA</b> main class name <b>MUST be "code"</b>(without quotations).</li>
+        <li>In case if prefered language is <b>PYTHON</b> pressing tab key will not auto indent the code. You <b>MUST yourself take care of indentation by provinding required number of spaces</b></li>
+        <li>You will get <b>only one</b> chance to submit the code</li>
+        <li>You will have <b>5 minutes (300 seconds)</b> to write your code. Your code will be automatically submitted after your time is <b>EXPIRED</b></li>
+        <li>As soon as you close this model your time will be started</li>
+        <li><b>Scoring:</b>
+          <ul>
+            <li><b>On Successful Compilation :</b> 20 </li>
+            <li><b>On Each Test Case pass (15 Test Cases) :</b> 10 (Max = 15 * 10 = 150)</li>
+            <li><b>Time Bones :</b>(No. of seconds left) / 5</li>
+            <li><b>Max Score :</b> 20 + 150 + 60 </li>
+          </ul>
+        </li>
+        <li><b>Note : </b> Time bonus is added <b>only when </b> one or more test case is Accepted</li>
+      </ol>
+    </p>
+  </div>
+</div>
+<div class="row">
+  <div class="column2">
+    <div class="jumbotron" id="question">
+      <h2>{{ post['title'] }}</h2>
+      <p>
+        {{ post['body'] }}
+      </p>
+    </div>
+  </div>
+  <div class="column">
+    <!-- code frame -->
+    <div class="box">
+      <div class="counters">
+        <p id="timer"> </p>
+        <p id="charcount"> <b>CharacterCount :</b> 0 </p>
+      </div>
+      <div class="codebox">
+        <select class="selectpicker" required onchange="langSelect()" id="language">
+           <option value="Select Language" selected disabled>Select Language</option>
+           <option value="c">C</option>
+           <option value="cpp">C++</option>
+           <option value="java">JAVA</option>
+           <option value="py">Python</option>
+        </select>
+        <textarea placeholder="Type your code here.." id="code" onkeypress="countdown.charpress(event)" onpaste="noPaste()" disabled></textarea>
+      </div>
+      <div class="chat-form">
+        <button type="button" onclick="countdown.retry()">Retry</button>
+        <button id="SubmitButton"type="button" onclick="countdown.stop()">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
