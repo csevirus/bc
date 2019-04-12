@@ -6,61 +6,8 @@
   integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
   integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 {% block content %}
-<style>
-  html,
-  body {
-    height: 100vh;
-    overflow: hidden;
-    margin: 0;
-    padding: 0;
-  }
-  .wrapper {
-    width: 100%;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .left {
-    height: 100vh;
-    padding: 50px 0 100px 0;
-    overflow: scroll;
-  }
-  .flex_first {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-  }
-  ::-webkit-scrollbar {
-    width: 10px;
-  }
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background: #f1f1f1;
-  }
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: #888;
-  }
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555;
-  }
-  @media all and (max-width:800px) {
-    body {
-      overflow: scroll;
-    }
-    .left {
-      height: auto;
-
-    }
-    .wrapper {
-      grid-template-columns: repeat(1, 1fr);
-    }
-  }
-</style>
-
 <div class="modal bd-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
@@ -133,7 +80,6 @@
       </p>
     </div>
   </div>
-
   <div class="right">
     <!-- code frame -->
     <div class="container" style="">
@@ -154,11 +100,9 @@
         </select>
       </div>
     </div>
-
-
     <div style="height:80vh;padding:0;margin:0;">
       <textarea style="height:100%; overflow-y:scroll;" placeholder="Type your code here.." id="code"
-        class="form-control" onkeypress="countdown.charpress(event)" onpaste="noPaste()" disabled></textarea>
+        class="form-control" onkeypress="countdown.charpress(event)" onkeydown="preventBackspace(event)" onpaste="noPaste(event)" disabled></textarea>
     </div>
     <div class="row" style="height:10vh;">
       <div class="container d-flex justify-content-center align-items-center">
@@ -177,5 +121,8 @@ $('#myModal').modal({
   backdrop:'static',
   keyboard:false
 })
+window.onload = function () {
+  $('#myModal').modal('show');
+};
 </script>
 {% endblock %}

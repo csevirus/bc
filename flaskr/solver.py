@@ -9,12 +9,24 @@ from flaskr.db import get_db
 from flaskr.questions import get_post
 
 bp = Blueprint('solver', __name__, url_prefix='/solver')
+semaphore = 1;
+
+def p():
+    global semaphore
+    while(semaphore == 0):
+        pass;
+    semaphore -= 1
+
+def v():
+    global semaphore
+    semaphore += 1
 
 @bp.route('/<int:id>', methods=('POST','GET'))
 @login_required
 def index(id):
     post = get_post(id,False)
     if request.method == 'POST':
+        p();
         path = '/home/csevirus/project/bc/instance/'+post['title']
         ret = request.get_json()
         lang = ret['lang']
@@ -45,6 +57,7 @@ def index(id):
         (g.user['id'], id, verdict, score, code, msg, passed)
         )
         db.commit()
+        v();
         return str(cur.lastrowid)
     return render_template('solver/index.html', post = post)
 

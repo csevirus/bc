@@ -7,10 +7,6 @@ var user = {
   code: "",
   timetaken: 300,
 };
-window.onload = function () {
-  $('#myModal').modal('show');
-};
-
 function langSelect() {
   user.lang = document.getElementById("language").value;
   document.getElementById("code").disabled = false;
@@ -59,15 +55,8 @@ var countdown = {
     countdown.submit();
   },
   charpress: function(event) {
-    // pervent Backspace
-    console.log(event.keyCode)
-    if (event.keyCode == 8) {
-      event.preventDefault();
-      alert("Backspace is not allowed here");
-      return;
-    }
     countdown.charcount += 1;
-    document.getElementById("charcount").innerHTML = " <b>CharacterCount :</b>" + countdown.charcount;
+    document.getElementById("charcount").innerHTML = " <strong>CharacterCount :</strong>" + countdown.charcount;
     var char = getChar(event);
     if (char != null)
       user.code += char;
@@ -75,6 +64,7 @@ var countdown = {
     document.getElementById("code").value += "*";
   },
   retry: function() {
+    document.getElementById("code").blur();
     user.code = "";
     countdown.charcount = 0;
     document.getElementById("charcount").innerHTML = " <strong>CharacterCount :</strong> " + countdown.charcount;
@@ -95,7 +85,16 @@ var countdown = {
     request.send(JSON.stringify(user));
   }
 }
-function noPaste() {
+function preventBackspace(event){
+  if (event.keyCode == 8 || event.charCode == 8) {
+    event.preventDefault();
+    document.getElementById("code").blur();
+    alert("Backspace is not allowed here");
+    return;
+  }
+}
+function noPaste(event) {
+  event.preventDefault();
   countdown.retry();
   alert("You cannot paste here ... it's cheating");
 }
