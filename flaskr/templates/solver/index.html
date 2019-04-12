@@ -1,68 +1,181 @@
-{% extends 'base.html' %}
-
-{% block header %}
-  <h1>{% block title %}Solver{% endblock %}</h1>
-{% endblock %}
-
+<link rel="stylesheet" href="https://bootswatch.com/4/litera/bootstrap.min.css" />
+<script type="text/javascript" src="{{ url_for('static', filename='script.js') }}" charset="utf-8"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 {% block content %}
-<div id="instmodal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="modalClose()">&times;</span>
-    <p>
-      <h2 text-align="center"><b>INSTRUSTIONS</b></h2>
-      <ol>
-        <li>Before you attempt the problem, you MUST select a language from the dropdown list.</li>
-        <li>All inputs for the problem are from STDIN and output to STDOUT.</li>
-        <li>You cannot use backspace key, if you think you have made any mistake you can press retry key to restart your code.</li>
-        <li>In case if prefered language is <b>JAVA</b> main class name <b>MUST be "code"</b>(without quotations).</li>
-        <li>In case if prefered language is <b>PYTHON</b> pressing tab key will not auto indent the code. You <b>MUST yourself take care of indentation by provinding required number of spaces</b></li>
-        <li>You will get <b>only one</b> chance to submit the code</li>
-        <li>You will have <b>5 minutes (300 seconds)</b> to write your code. Your code will be automatically submitted after your time is <b>EXPIRED</b></li>
-        <li>As soon as you close this model your time will be started</li>
-        <li><b>Scoring:</b>
-          <ul>
-            <li><b>On Successful Compilation :</b> 20 </li>
-            <li><b>On Each Test Case pass (15 Test Cases) :</b> 10 (Max = 15 * 10 = 150)</li>
-            <li><b>Time Bones :</b>(No. of seconds left) / 5</li>
-            <li><b>Max Score :</b> 20 + 150 + 60 </li>
-          </ul>
-        </li>
-        <li><b>Note : </b> Time bonus is added <b>only when </b> one or more test case is Accepted</li>
-      </ol>
-    </p>
+<style>
+  html,
+  body {
+    height: 100vh;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+  }
+  .wrapper {
+    width: 100%;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .left {
+    height: 100vh;
+    padding: 50px 0 100px 0;
+    overflow: scroll;
+  }
+  .flex_first {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  @media all and (max-width:800px) {
+    body {
+      overflow: scroll;
+    }
+    .left {
+      height: auto;
+
+    }
+    .wrapper {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+</style>
+
+<div class="modal bd-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">INSTRUSTIONS</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="countdown.clock()">
+          <span aria-hidden="true" id="close">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ol>
+          <li>
+            Before you attempt the problem, you MUST select a language from the
+            dropdown list.
+          </li>
+          <li>
+            All inputs for the problem are from STDIN and output to STDOUT.
+          </li>
+          <li>
+            You cannot use backspace key, if you think you have made any mistake
+            you can press retry key to restart your code.
+          </li>
+          <li>
+            In case if prefered language is <b>JAVA</b> main class name
+            <b>MUST be "code"</b>(without quotations).
+          </li>
+          <li>
+            In case if prefered language is <b>PYTHON</b> pressing tab key will
+            not auto indent the code. You
+            <b>MUST yourself take care of indentation by provinding required
+              number of spaces</b>
+          </li>
+          <li>You will get <b>only one</b> chance to submit the code</li>
+          <li>
+            You will have <b>5 minutes (300 seconds)</b> to write your code.
+            Your code will be automatically submitted after your time is
+            <b>EXPIRED</b>
+          </li>
+          <li>As soon as you close this model your time will be started</li>
+          <li>
+            <b>Scoring:</b>
+            <ul>
+              <li><b>On Successful Compilation :</b> 20</li>
+              <li>
+                <b>On Each Test Case pass (15 Test Cases) :</b> 10 (Max = 15 *
+                10 = 150)
+              </li>
+              <li><b>Time Bones :</b>(No. of seconds left) / 5</li>
+              <li><b>Max Score :</b> 20 + 150 + 60</li>
+            </ul>
+          </li>
+          <li>
+            <b>Note : </b> Time bonus is added <b>only when </b> one or more
+            test case is Accepted
+          </li>
+        </ol>
+      </div>
+    </div>
   </div>
 </div>
-<div class="row">
-  <div class="column2">
-    <div class="jumbotron" id="question">
+<div class="wrapper">
+  <div class="left" id="question">
+    <div class="container">
       <h2>{{ post['title'] }}</h2>
       <p>
+        {% autoescape false %}
         {{ post['body'] }}
+        {% endautoescape %}
       </p>
     </div>
   </div>
-  <div class="column">
+
+  <div class="right">
     <!-- code frame -->
-    <div class="box">
-      <div class="counters">
-        <p id="timer"> </p>
-        <p id="charcount"> <b>CharacterCount :</b> 0 </p>
-      </div>
-      <div class="codebox">
-        <select class="selectpicker" required onchange="langSelect()" id="language">
-           <option value="Select Language" selected disabled>Select Language</option>
-           <option value="c">C</option>
-           <option value="cpp">C++</option>
-           <option value="java">JAVA</option>
-           <option value="py">Python</option>
+    <div class="container" style="">
+      <div class="row" style="display:flex;align-items:center;height: 10vh;background-color:#00263e;">
+        <div  id='timer' class="col-sm-4 lead text-white">
+        </div>
+        <div id="charcount" class="col-sm-4 lead text-white">
+          <strong>CharacterCount :</strong> 0
+        </div>
+        <select class="selectpicker form-control col-sm-4"
+        required
+        onchange="langSelect()" id="language">
+          <option value="Select Language" selected disabled>Select Language</option>
+          <option value="c">C</option>
+          <option value="cpp">C++</option>
+          <option value="java">JAVA</option>
+          <option value="py">Python</option>
         </select>
-        <textarea placeholder="Type your code here.." id="code" onkeypress="countdown.charpress(event)" onpaste="noPaste()" disabled></textarea>
       </div>
-      <div class="chat-form">
-        <button type="button" onclick="countdown.retry()">Retry</button>
-        <button id="SubmitButton"type="button" onclick="countdown.stop()">Submit</button>
+    </div>
+
+
+    <div style="height:80vh;padding:0;margin:0;">
+      <textarea style="height:100%; overflow-y:scroll;" placeholder="Type your code here.." id="code"
+        class="form-control" onkeypress="countdown.charpress(event)" onpaste="noPaste()" disabled></textarea>
+    </div>
+    <div class="row" style="height:10vh;">
+      <div class="container d-flex justify-content-center align-items-center">
+        <button type=" button" class="btn btn-primary mr-5 btn-lg" onclick="countdown.retry()">
+          Retry
+        </button>
+        <button id="SubmitButton" class="btn btn-success btn-lg" type="button" onclick="countdown.stop()">
+          Submit
+        </button>
       </div>
     </div>
   </div>
 </div>
+<script type="text/javascript">
+$('#myModal').modal({
+  backdrop:'static',
+  keyboard:false
+})
+</script>
 {% endblock %}

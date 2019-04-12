@@ -1,13 +1,18 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block header %}
+<h1 class="display-4 text-center mt-5">{% block title %}New Post{% endblock %}</h1>
+{% endblock %} {% block content %}
+<div class="container">
+  <div class="row">
+    <div class="card card-body col-md-4 mx-auto ">
+      <form method="post">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" name="email" id="email" class="form-control" value="{{ request.form['email'] }}" required>
+        </div>
 
-{% block header %}
-  <h1>{% block title %}New Post{% endblock %}</h1>
-{% endblock %}
-
-{% block content %}
-  <form method="post">
-    <label for="email">Email</label>
-    <input type="email" name="email" id="email" value="{{ request.form['email'] }}" required>
-    <input type="submit" value="Save">
-  </form>
+        <input type="submit" class="btn btn-secondary btn-block" value="Save">
+      </form>
+    </div>
+  </div>
+</div>
 {% endblock %}

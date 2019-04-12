@@ -7,11 +7,10 @@ var user = {
   code: "",
   timetaken: 300,
 };
-function modalClose() {
-  document.getElementById('instmodal').style.display = "none";
-  document.getElementById('question').style.display = "block";
-  countdown.clock();
-}
+window.onload = function () {
+  $('#myModal').modal('show');
+};
+
 function langSelect() {
   user.lang = document.getElementById("language").value;
   document.getElementById("code").disabled = false;
@@ -41,7 +40,11 @@ var countdown = {
     } else {
       countdown.seconds = countdown.seconds - 1;
     }
-    document.getElementById("timer").innerHTML = "<b>TimeLeft </b>- 0" + countdown.minutes + ":" + countdown.seconds;
+    if (countdown.seconds > 9)
+    document.getElementById("timer").innerHTML = "<strong>TimeLeft </strong> : 0" + countdown.minutes + ":" + countdown.seconds;
+    else {
+      document.getElementById("timer").innerHTML = "<strong>TimeLeft </strong> : 0" + countdown.minutes + ":0" + countdown.seconds;
+    }
     if (countdown.minutes < 0) {
       countdown.stop();
     }
@@ -51,12 +54,13 @@ var countdown = {
   },
   stop: function() {
     user.timetaken = 300 - (countdown.minutes)*60 + countdown.seconds ;
-    document.getElementById("timer").innerHTML = "<b>TimeLeft </b>- EXPIRED";
+    document.getElementById("timer").innerHTML = "<strong>TimeLeft </strong> : EXPIRED";
     clearInterval(x);
     countdown.submit();
   },
   charpress: function(event) {
     // pervent Backspace
+    console.log(event.keyCode)
     if (event.keyCode == 8) {
       event.preventDefault();
       alert("Backspace is not allowed here");
@@ -73,7 +77,7 @@ var countdown = {
   retry: function() {
     user.code = "";
     countdown.charcount = 0;
-    document.getElementById("charcount").innerHTML = " <b>CharacterCount :</b> " + countdown.charcount;
+    document.getElementById("charcount").innerHTML = " <strong>CharacterCount :</strong> " + countdown.charcount;
     document.getElementById("code").value = "";
   },
   submit: function() {
@@ -82,6 +86,12 @@ var countdown = {
     var request = new XMLHttpRequest();
     request.open('POST',url,true);
     request.setRequestHeader("Content-Type", "application/json");
+    request.onreadystatechange = function () {
+      if (request.readyState === 4 && request.status === 200) {
+          var result = JSON.parse(request.responseText);
+          window.location.replace('/solver/submission/'+request.responseText)
+      }
+    };
     request.send(JSON.stringify(user));
   }
 }

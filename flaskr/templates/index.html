@@ -209,6 +209,7 @@
         opacity: 0;
         transform: translateY(70%);
       }
+
       100% {
         opacity: 1;
         transform: translateY(0%);
@@ -220,6 +221,7 @@
         opacity: 0;
         -webkit-transform: translateY(70%);
       }
+
       100% {
         opacity: 1;
         -webkit-transform: translateY(0%);
@@ -231,6 +233,7 @@
         text-align: center;
         margin: 25px 0;
       }
+
       .btn-lg {
         width: 100%;
         margin-bottom: 35px;
@@ -251,11 +254,12 @@
     <div class="container">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-        <a class="navbar-brand" href="index.html"><img src="{{ url_for('static', filename='logo.png') }}" alt="Logo"></a>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html"><img src="{{ url_for('static', filename='logo.png') }}"
+            alt="Logo"></a>
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav navbar-right">
@@ -273,8 +277,8 @@
     <p>Talk is cheap! Show us the code... Oops! You can't see the code</p>
     <form class="form-inline">
       <div class="input-group">
-        <button style="background-color: #574744" type="button" class="btn btn-success btn-lg"><a href="{{url_for('auth.register')}}">Register</a></button>
-        <button style="background-color: #574744" type="button" class="btn btn-success btn-lg"><a href="{{url_for('auth.login')}}">login</a></button>
+        <a class="btn btn-danger btn-lg" style="margin-right:10px" href="{{url_for('auth.register')}}">Register</a>
+        <a class="btn btn-primary btn-lg" href="{{url_for('auth.login')}}">login</a>
       </div>
     </form>
   </div>
@@ -284,8 +288,11 @@
     <div class="row">
       <div class="col-sm-8">
         <h2>About Blind Code</h2><br>
-        <h4>Blind Code is a not-for-profit coding platform, where you have to write code for a problem. The difference is, you can't see the code. It is a programming community that fosters learning and friendly competition. We host featured contests every month. <br>
-      We also provide platform to practice "Blind Coding" which definitely helps the coder to improve his coding skills</h4>
+        <h4>Blind Code is a not-for-profit coding platform, where you have to write code for a problem. The difference
+          is, you can't see the code. It is a programming community that fosters learning and friendly competition. We
+          host featured contests every month. <br>
+          We also provide platform to practice "Blind Coding" which definitely helps the coder to improve his coding
+          skills</h4>
         <br>
         <form class="form-inline">
           <div class="input-group">
@@ -307,7 +314,9 @@
       </div>
       <div class="col-sm-8">
         <h2>Our Values</h2><br>
-        <h4><strong>MISSION:</strong> The BlindCode team is on a mission to make every developer in the world confident enough to write code without any hasitation and help them increase their speed and efficiency of writing code.</h4>
+        <h4><strong>MISSION:</strong> The BlindCode team is on a mission to make every developer in the world confident
+          enough to write code without any hasitation and help them increase their speed and efficiency of writing code.
+        </h4>
       </div>
     </div>
   </div>
@@ -412,19 +421,20 @@
       marker.setMap(map);
     }
   </script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc2UsPDesM6Ei88P_KXZXG2vfLqhZKH5g&callback=myMap"></script>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc2UsPDesM6Ei88P_KXZXG2vfLqhZKH5g&callback=myMap"></script>
 
 
   <footer class="container-fluid text-center">
     <a href="#myPage" title="To Top">
-    <span class="glyphicon glyphicon-chevron-up"></span>
-  </a>
+      <span class="glyphicon glyphicon-chevron-up"></span>
+    </a>
   </footer>
 
   <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
       // Add smooth scrolling to all links in navbar + footer link
-      $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
+      $(".navbar a, footer a[href='#myPage']").on('click', function (event) {
 
         // Prevent default anchor click behavior
         event.preventDefault();
@@ -436,7 +446,7 @@
         // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
         $('html, body').animate({
           scrollTop: $(hash).offset().top
-        }, 900, function() {
+        }, 900, function () {
 
           // Add hash (#) to URL when done scrolling (default click behavior)
           window.location.hash = hash;
@@ -444,8 +454,8 @@
       });
 
       // Slide in elements on scroll
-      $(window).scroll(function() {
-        $(".slideanim").each(function() {
+      $(window).scroll(function () {
+        $(".slideanim").each(function () {
           var pos = $(this).offset().top;
 
           var winTop = $(window).scrollTop();

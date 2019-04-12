@@ -29,10 +29,17 @@ def createAdmin():
         error = None
         if not email:
             error = 'Email is required.'
+        db = get_db()
+        usr = db.execute(
+            'SELECT * FROM user'
+            ' WHERE id = ?',
+            (g.user['id'],)
+        ).fetchone()
+        if usr['isAdmin'] != "TRUE":
+            error = 'You are not Admin, You are not supposed to access this page'
         if error is not None:
             flash(error)
         else:
-            db = get_db()
             db.execute(
                 'UPDATE user SET isAdmin = "TRUE"'
             )
@@ -51,6 +58,14 @@ def create():
             error = 'Title is required.'
         elif not body:
             error = 'Body is required.'
+        db = get_db()
+        usr = db.execute(
+            'SELECT * FROM user'
+            ' WHERE id = ?',
+            (g.user['id'],)
+        ).fetchone()
+        if usr['isAdmin'] != "TRUE":
+            error = 'You are not Admin, You are not supposed to access this page'
         if error is not None:
             flash(error)
         else:

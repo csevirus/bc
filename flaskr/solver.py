@@ -40,12 +40,12 @@ def index(id):
         db = get_db()
         cur = db.cursor()
         cur.execute(
-        'INSERT INTO submission (author_id, problem_id, verdict, timetaken, score, code, lang, msg, passed)'
-        ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-        (g.user['id'], id, verdict, timetaken, score, code, lang, msg, passed)
+        'INSERT INTO submission (author_id, problem_id, verdict, score, code, msg, passed)'
+        ' VALUES (?, ?, ?, ?, ?, ?, ?)',
+        (g.user['id'], id, verdict, score, code, msg, passed)
         )
         db.commit()
-        return redirect(url_for('solver.submission', id = cur.lastrowid))
+        return str(cur.lastrowid)
     return render_template('solver/index.html', post = post)
 
 @bp.route('/submission/<int:id>', methods=('GET',))
@@ -56,7 +56,7 @@ def submission(id):
 
 def get_submission(id, check_author=True):
     submission = get_db().execute(
-        'SELECT * FROM submission'
+        'SELECT verdict, msg, passed, score, code FROM submission'
         ' WHERE id = ?',
         (id,)
     ).fetchone()

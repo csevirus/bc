@@ -1,28 +1,50 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block header %}
+<h1 class="display-3 text-center mt-5">
+  {% block title %}Register{% endblock %}
+</h1>
+{% endblock %} {% block content %}
+<div class="container">
+  <div class="row">
+    <div class="card card-body col-md-4 mx-auto">
+      <form method="post">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input name="username" class="form-control" id="username" required />
+        </div>
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input name="name" class="form-control" id="name" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" name="email" class="form-control" id="email" required />
+        </div>
 
-{% block header %}
-  <h1>{% block title %}Register{% endblock %}</h1>
-{% endblock %}
+        <div class="form-group">
+          <label for="gender">Gender</label>
+          <div>
+            <input type="radio" name="gender" value="male" checked />
+            <label for="male">Male</label>
+            <input type="radio" name="gender" value="female" />
+            <label for="female">Female</label>
+            <input type="radio" name="gender" value="other" />
+            <label for="others">Others</label>
+          </div>
+        </div>
 
-{% block content %}
-  <form method="post">
-    <label for="username">Username</label>
-    <input name="username" id="username" required>
-    <label for="name">Name</label>
-    <input name="name" id="name" required>
-    <label for="email">Email</label>
-    <input type="email" name="email" id="email" required>
-    <label for="gender">Gender</label>
-    <label for="male">Male</label>
-    <input type="radio" name="gender" value="male" checked>
-    <label for="female">Female</label>
-    <input type="radio" name="gender" value="female">
-    <label for="others">Others</label>
-    <input type="radio" name="gender" value="other">
-    <label for="Mobile">Mobile</label>
-    <input name="contact" id="contact" required>
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" required>
-    <input type="submit" value="Register">
-  </form>
+        <div class="form-group">
+          <label for="Mobile">Mobile</label>
+          <input name="contact" class="form-control" id="contact" required />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" name="password" class="form-control" id="password" required />
+        </div>
+
+        <input class="btn btn-primary btn-block" type="submit" value="Register" />
+      </form>
+    </div>
+  </div>
+</div>
+
 {% endblock %}

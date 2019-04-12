@@ -1,19 +1,31 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Submission{% endblock %}</h1>
+<h1 class="text-center display-3 mt-5">{% block title %}Submission{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
-<div >
-  <div >
-    <div>
-      <p id="status"> <b>Compilation status :</b> <br> {{submission['verdict']}}</p>
-      <p id="msg"> <b>Compile Info:</b> <br>{{submission['msg']}}</p>
-      <p id="testpass"> <b>Testcases Accepted :</b> <br>{{submission['passed']}} </p>
-      <p id="score"> <b>Score :</b><br> {{submission['score']}}</p>
+<div class="container">
+  <ul class="list-group">
+    <li class="list-group-item">
+      <p id="status"> <strong>Compilation status :</strong> <br> {{submission['verdict']}}</p>
+    </li>
+    <li class="list-group-item">
+      <p id="msg"> <strong>Compile Info:</strong> <br>{{submission['msg']}}</p>
+    </li>
+    <li class="list-group-item">
+      <p id="testpass"> <strong>Testcases Accepted :</strong> <br>{{submission['passed']}} </p>
+    </li>
+    <li class="list-group-item">
+      <p id="score"> <strong>Score :</strong> <br> {{submission['score']}}</p>
+    </li>
+  </ul>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <textarea class="form-control" id='result' disabled>{{submission['code']}}</textarea>
     </div>
-    <textarea id='result'>{{submission['code']}}</textarea>
   </div>
+
 </div>
 {% endblock %}
