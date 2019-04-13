@@ -10,6 +10,7 @@ def create_app(test_config=None):
     app.config.from_mapping(
         SECRET_KEY='iq\x9f\xa4\x0e,\xf4\x88z#\xc0\x0c\x12\x12\x0ex',
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
+        INSTANCE_PATH = app.instance_path
     )
     if test_config is None:
         # load the instance config, if it exists, when not testing

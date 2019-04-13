@@ -1,5 +1,5 @@
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, url_for
+    Blueprint, flash, current_app, g, redirect, render_template, request, url_for
 )
 import os
 import subprocess
@@ -27,7 +27,7 @@ def index(id):
     post = get_post(id,False)
     if request.method == 'POST':
         p();
-        path = '/home/csevirus/project/bc/instance/'+post['title']
+        path = current_app.config['INSTANCE_PATH']+post['title']
         ret = request.get_json()
         lang = ret['lang']
         code = ret['code']

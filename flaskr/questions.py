@@ -1,5 +1,5 @@
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, url_for
+    Blueprint, current_app, flash, g, redirect, render_template, request, url_for
 )
 import os
 import shutil
@@ -9,7 +9,6 @@ from flaskr.auth import login_required
 from flaskr.db import get_db
 
 bp = Blueprint('questions', __name__, url_prefix='/questions')
-path = '/home/csevirus/project/bc/instance'
 
 @bp.route('/')
 @login_required
@@ -53,12 +52,16 @@ def create():
     if request.method == 'POST':
         title = request.form['title']
         body = request.form['body']
+        db = get_db()
         error = None
         if not title:
             error = 'Title is required.'
         elif not body:
             error = 'Body is required.'
-        db = get_db()
+        elif db.execute(
+            'SELECT id FROM problem WHERE title = ?', (title,)
+        ).fetchone() is not None:
+            error = 'Title {} is already registered.'.format(title)
         usr = db.execute(
             'SELECT * FROM user'
             ' WHERE id = ?',
@@ -69,6 +72,7 @@ def create():
         if error is not None:
             flash(error)
         else:
+            path = current_app.config['INSTANCE_PATH']
             try:
                 os.makedirs(path+'/'+title)
             except OSError:
@@ -120,6 +124,7 @@ def update(id):
             flash(error)
         else:
             db = get_db()
+            path = current_app.config['INSTANCE_PATH']
             try:
                 os.rename(path+'/'+post['title'],path+'/'+title)
             except OSError:
@@ -140,6 +145,7 @@ def update(id):
 def delete(id):
     post = get_post(id)
     db = get_db()
+    path = current_app.config['INSTANCE_PATH']
     shutil.rmtree(path+'/'+post['title'])
     db.execute('DELETE FROM problem WHERE id = ?', (id,))
     db.commit()

@@ -8,3 +8,5 @@ MarkupSafe==1.1.1
 postgres==2.2.2
 psycopg2-binary==2.8.1
 Werkzeug==0.15.2
+openjdk==10.0.2
+javac==10.0.2
