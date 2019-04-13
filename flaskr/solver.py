@@ -27,7 +27,7 @@ def index(id):
     post = get_post(id,False)
     if request.method == 'POST':
         p();
-        path = current_app.config['INSTANCE_PATH']+post['title']
+        path = current_app.config['INSTANCE_PATH']+'/'+post['title']
         ret = request.get_json()
         lang = ret['lang']
         code = ret['code']
