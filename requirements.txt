@@ -1,0 +1,11 @@
+Click==7.0
+Flask==1.0.2
+-e git+https://github.com/csevirus/bc.git@cb0c68ceccbc886ae7fc001837ca5ac46aea945b#egg=flaskr
+gunicorn==19.9.0
+itsdangerous==1.1.0
+Jinja2==2.10.1
+MarkupSafe==1.1.1
+pkg-resources==0.0.0
+postgres==2.2.2
+psycopg2-binary==2.8.1
+Werkzeug==0.15.2
